@@ -103,6 +103,15 @@
   }
 }
 
+.cardLayout {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  justify-content: center;
+}
 @media (min-width: 1280px) {
   .main {
     margin-top: 7rem /* 112px */;
