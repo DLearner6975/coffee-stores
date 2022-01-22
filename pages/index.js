@@ -4,11 +4,12 @@ import Banner from "../components/banner";
 import Card from "../components/card";
 import styles from "../styles/Home.module.css";
 import coffeeStoresData from "../data/coffee-stores.json";
+import { fetchCoffeeStores } from "../lib/coffee-stores";
 
 export async function getStaticProps(context) {
-  // const data = fetch(coffeeStores); fetch if coming from utside source
+  const coffeeStores = await fetchCoffeeStores();
   return {
-    props: { coffeeStores: coffeeStoresData }, // will be passed to the page component as props
+    props: { coffeeStores },
   };
 }
 
@@ -37,6 +38,10 @@ export default function Home({ coffeeStores }) {
             alt="image display"
           />
         </div>
+        <h1>
+          The value of customKey is:
+          {process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY}
+        </h1>
         {coffeeStores.length && (
           <>
             <h2 className={styles.heading2}>Toronto stores</h2>
@@ -46,7 +51,10 @@ export default function Home({ coffeeStores }) {
                   <Card
                     key={coffeeStore.id}
                     name={coffeeStore.name}
-                    imgUrl={coffeeStore.imgUrl}
+                    imgUrl={
+                      coffeeStore.imgUrl ??
+                      `https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80`
+                    }
                     href={`/coffee-store/${coffeeStore.id}`}
                     className={styles.card}
                   />
