@@ -38,10 +38,6 @@ export default function Home({ coffeeStores }) {
             alt="image display"
           />
         </div>
-        <h1>
-          The value of customKey is:
-          {process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY}
-        </h1>
         {coffeeStores.length && (
           <>
             <h2 className={styles.heading2}>Toronto stores</h2>
