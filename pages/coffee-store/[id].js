@@ -6,32 +6,27 @@ import coffeeStoresData from "../../data/coffee-stores.json";
 import styles from "../../styles/coffee-store.module.css";
 import clsx from "clsx";
 import { fetchCoffeeStores } from "../../lib/coffee-stores";
-
-export async function getStaticProps(staticProps) {
-  const params = staticProps.params;
-  const data = await fetchCoffeeStores();
+export async function getStaticProps({ params }) {
+  // const data = await fetchCoffeeStores();
+  const data = await coffeeStoresData;
+  const coffeeStore = data.find((coffeeStore) => coffeeStore.id === params.id);
   return {
     props: {
-      coffeeStore: data.find(
-        (coffeeStore) => coffeeStore.fsq_id?.toString() === params.id
-      ),
-    }, // will be passed to the page component as props
+      coffeeStore,
+    },
   };
 }
 
 export async function getStaticPaths() {
-  const data = await fetchCoffeeStores();
-  const paths = data.map((coffeeStore) => {
-    console.log("static paths", coffeeStore.fsq_id);
-    return {
-      params: {
-        id: coffeeStore.fsq_id?.toString(),
-      },
-    };
-  });
+  // const data = await fetchCoffeeStores();
+  const data = await coffeeStoresData;
+
+  const paths = data.map((coffeeStore) => ({
+    params: { id: coffeeStore.id },
+  }));
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 }
 
@@ -61,7 +56,10 @@ const CoffeeStore = ({ coffeeStore }) => {
             <h1 className={styles.name}>{name}</h1>
           </div>
           <Image
-            src={imgUrl}
+            src={
+              imgUrl ??
+              "https://g.foolcdn.com/editorial/images/421803/coffee-with-froth-design-and-coffee-beans_soHhApC.jpg"
+            }
             width={600}
             height={360}
             alt={name}

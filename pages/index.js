@@ -4,12 +4,12 @@ import Banner from "../components/banner";
 import Card from "../components/card";
 import styles from "../styles/Home.module.css";
 import coffeeStoresData from "../data/coffee-stores.json";
-import { fetchCoffeeStores } from "../lib/coffee-stores";
+//import { fetchCoffeeStoresStatic } from "../lib/coffee-stores-static";
 
 export async function getStaticProps(context) {
-  const coffeeStores = await fetchCoffeeStores();
+  // const coffeeStores = await fetchCoffeeStores();
   return {
-    props: { coffeeStores },
+    props: { coffeeStores: coffeeStoresData },
   };
 }
 
